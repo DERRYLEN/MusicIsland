@@ -18,6 +18,16 @@ target/
 *.log
 npm-debug.log*
 
+# AI & Session Memory
+.remember/
+.claude/
+.cursor/
+.superpowers/
+
+# IDE & Editor
+.vscode/
+.idea/
+
 # OS files
 .DS_Store
 Thumbs.db

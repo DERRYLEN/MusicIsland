@@ -259,29 +259,31 @@ export const DynamicIsland: React.FC = () => {
           /* COMPACT MUSIC MODE: Dynamic Island notch with adapted clock & music */
           <MusicCompact mediaState={mediaState} status={status} clock={clock} />
         ) : (
-          /* IDLE STANDBY NOTCH (Image #27) */
-          <div className="idle-standby-container" title={`Waktu Laptop: ${clock.fullTime} · ${clock.dayName}`}>
-            <span className="standby-time">{clock.time}</span>
-            <span className="standby-divider">|</span>
-            <div className="standby-status">
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#06b6d4"
-                strokeWidth="2.3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="standby-moon-icon"
-                aria-hidden="true"
-              >
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-              </svg>
-              <span className="standby-status-text">Standby</span>
+          /* IDLE STANDBY NOTCH (Image #3) */
+          <div
+            className="idle-standby-container"
+            title={`Waktu Laptop: ${clock.fullTime} · ${clock.dayWithComma} ${clock.dateShort}`}
+          >
+            {/* Kiri: Cyan Glowing Dot + STANDBY Label */}
+            <div className="standby-left-group">
+              <span className="standby-cyan-dot" aria-hidden="true" />
+              <span className="standby-label">STANDBY</span>
             </div>
-            <span className="standby-divider">|</span>
-            <span className="standby-day">{clock.dayName}</span>
+
+            {/* Tengah: Digital Clock (15:24 WIB) */}
+            <div className="standby-time-group" aria-label={`Jam ${clock.time} ${clock.timezone}`}>
+              <span className="standby-time-hours">{clock.hours}</span>
+              <span className="standby-time-colon">:</span>
+              <span className="standby-time-minutes">{clock.minutes}</span>
+              <span className="standby-time-zone">{clock.timezone}</span>
+            </div>
+
+            {/* Kanan: Capsule Badge dengan Green LED + Hari & Tanggal (Sebaris / Tidak Bertumpuk) */}
+            <div className="standby-calendar-pill" aria-label={`${clock.dayWithComma} ${clock.dateShort}`}>
+              <span className="standby-pill-led" aria-hidden="true" />
+              <span className="standby-cal-day">{clock.dayWithComma}</span>
+              <span className="standby-cal-date">{clock.dateShort}</span>
+            </div>
           </div>
         )}
       </div>

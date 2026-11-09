@@ -82,35 +82,38 @@
 }
 
 /* =========================================================
-   MODE 1: IDLE / STANDBY NOTCH
-   Digital clock (neon cyan), Moon status & Day of the week
+   MODE 1: IDLE / STANDBY NOTCH (Image #3)
+   Pill Notch with Cyan Glow Dot, Large Digital Clock & Date Capsule
    ========================================================= */
 .dynamic-island.idle {
-  width: 374px;
-  height: 36px;
-  border-radius: 18px;
-  padding: 0 16px;
+  width: 404px;
+  height: 40px;
+  border-radius: 20px;
+  padding: 0 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #070a0f;
-  border: 1px solid rgba(6, 182, 212, 0.18);
-  box-shadow: 0 0 0 1px rgba(14, 165, 233, 0.08), 0 6px 18px rgba(0, 0, 0, 0.55);
+  background: radial-gradient(ellipse at 50% 0%, #081726 0%, #030710 100%);
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  box-shadow: 0 0 16px rgba(6, 182, 212, 0.22),
+              inset 0 1px 1.5px rgba(34, 211, 238, 0.45),
+              0 8px 24px rgba(0, 0, 0, 0.7);
 }
 
 .dynamic-island.idle:hover {
-  background: #0c111a;
-  border-color: rgba(6, 182, 212, 0.35);
-  box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.16), 0 8px 22px rgba(0, 0, 0, 0.65);
+  background: radial-gradient(ellipse at 50% 0%, #0d233a 0%, #050b16 100%);
+  border-color: rgba(34, 211, 238, 0.55);
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.35),
+              inset 0 1px 2px rgba(34, 211, 238, 0.6),
+              0 10px 28px rgba(0, 0, 0, 0.8);
 }
 
 .idle-standby-container {
   width: 100%;
-  height: 36px;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
   user-select: none;
   animation: standby-fade-in 0.22s cubic-bezier(0.16, 1, 0.3, 1) 0.16s both;
   will-change: opacity, transform;
@@ -127,52 +130,124 @@
   }
 }
 
-.standby-time {
-  font-family: 'SF Mono', 'Cascadia Code', 'Consolas', 'Courier New', monospace;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--accent-color, #22d3ee);
-  letter-spacing: 0.06em;
-  flex-shrink: 0;
-  text-shadow: 0 0 12px var(--accent-glow, rgba(34, 211, 238, 0.4));
-}
-
-.standby-divider {
-  color: rgba(255, 255, 255, 0.18);
-  font-size: 13px;
-  font-weight: 300;
-  user-select: none;
-  flex-shrink: 0;
-}
-
-.standby-status {
+/* Standby Left: Cyan Glow Dot + STANDBY Text */
+.standby-left-group {
   display: flex;
   align-items: center;
   gap: 7px;
-  min-width: 0;
-}
-
-.standby-moon-icon {
   flex-shrink: 0;
 }
 
-.standby-status-text {
-  font-size: 11.5px;
-  font-weight: 500;
-  color: #e2e8f0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  letter-spacing: -0.01em;
+.standby-cyan-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: var(--accent-color, #00e5ff);
+  box-shadow: 0 0 10px 2.5px var(--accent-glow, rgba(0, 229, 255, 0.8));
+  flex-shrink: 0;
+  animation: standby-dot-pulse 2.5s ease-in-out infinite alternate;
 }
 
-.standby-day {
-  font-family: 'SF Mono', 'Cascadia Code', 'Consolas', 'Courier New', monospace;
-  font-size: 12px;
-  font-weight: 500;
-  color: #94a3b8;
+@keyframes standby-dot-pulse {
+  0% {
+    transform: scale(0.92);
+    box-shadow: 0 0 8px 2px var(--accent-glow, rgba(0, 229, 255, 0.65));
+  }
+  100% {
+    transform: scale(1.08);
+    box-shadow: 0 0 12px 3.5px var(--accent-glow, rgba(0, 229, 255, 0.95));
+  }
+}
+
+.standby-label {
+  font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: #7dd3fc;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Standby Center: Large Digital Clock (15:24 WIB) */
+.standby-time-group {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  user-select: none;
+  font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+}
+
+.standby-time-hours {
+  font-size: 21px;
+  font-weight: 800;
+  color: #f0fdf4;
   letter-spacing: 0.02em;
+  text-shadow: 0 0 8px rgba(240, 253, 244, 0.35);
+}
+
+.standby-time-colon {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--accent-color, #00e5ff);
+  margin: 0 1px;
+  text-shadow: 0 0 10px var(--accent-glow, rgba(0, 229, 255, 0.6));
+}
+
+.standby-time-minutes {
+  font-size: 21px;
+  font-weight: 800;
+  color: var(--accent-color, #00e5ff);
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 12px var(--accent-glow, rgba(0, 229, 255, 0.7));
+}
+
+.standby-time-zone {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--accent-color, #00e5ff);
+  margin-left: 5px;
+  opacity: 0.85;
+  letter-spacing: 0.04em;
+}
+
+/* Standby Right: Pill Badge with Green LED + Day & Date (Horizontal Sebaris / Tidak Bertumpuk) */
+.standby-calendar-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3.5px 10px;
+  border-radius: 13px;
+  border: 1px solid rgba(34, 211, 238, 0.32);
+  background: rgba(34, 211, 238, 0.05);
+  box-shadow: inset 0 0 8px rgba(34, 211, 238, 0.06);
   flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.standby-pill-led {
+  width: 3px;
+  height: 9px;
+  border-radius: 1.5px;
+  background-color: #22c55e;
+  box-shadow: 0 0 6px 1px #22c55e;
+  flex-shrink: 0;
+  margin-right: 1px;
+}
+
+.standby-cal-day {
+  font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #7dd3fc;
+  letter-spacing: 0.01em;
+}
+
+.standby-cal-date {
+  font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #e0f2fe;
+  letter-spacing: 0.01em;
 }
 
 /* =========================================================
@@ -335,9 +410,11 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: #0d0f12;
+  background: radial-gradient(ellipse at 50% 0%, #121824 0%, #080c12 60%, #05070a 100%);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 8px 24px rgba(0, 0, 0, 0.6);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.14),
+              0 14px 38px rgba(0, 0, 0, 0.75),
+              0 0 0 1px rgba(255, 255, 255, 0.04);
   cursor: default;
 }
 
@@ -380,28 +457,58 @@
 }
 
 .expanded-cover {
-  width: 54px;
-  height: 54px;
-  min-width: 54px;
-  max-width: 54px;
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  max-width: 52px;
   border-radius: 14px;
   background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #3b82f6 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.25);
   position: relative;
   overflow: hidden;
   contain: strict;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.vinyl-cover-disc {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.vinyl-ring-groove {
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.025),
+              0 0 0 8px rgba(255, 255, 255, 0.02),
+              0 0 0 12px rgba(255, 255, 255, 0.015);
+  pointer-events: none;
 }
 
 .expanded-fallback-icon {
-  width: 24px;
-  height: 24px;
-  fill: #ffffff;
+  width: 22px;
+  height: 22px;
+  fill: #38bdf8;
   opacity: 0.95;
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.5));
+  position: relative;
+  z-index: 2;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.expanded-cover:hover .expanded-fallback-icon {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.8));
 }
 
 .expanded-cover-img {
@@ -416,6 +523,7 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
+  flex: 1;
   line-height: 1.25;
 }
 
@@ -426,9 +534,9 @@
 }
 
 .track-title {
-  font-size: 15.5px;
+  font-size: 15px;
   font-weight: 700;
-  color: #ffffff;
+  color: #f8fafc;
   letter-spacing: -0.015em;
   white-space: nowrap;
   overflow: hidden;
@@ -436,10 +544,10 @@
 }
 
 .track-artist {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   color: #94a3b8;
-  margin-top: 3px;
+  margin-top: 2px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -519,8 +627,8 @@
 
 .progress-track {
   width: 100%;
-  height: 5px;
-  background-color: rgba(255, 255, 255, 0.15);
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 3px;
   position: relative;
   overflow: hidden;
@@ -529,15 +637,16 @@
 
 .progress-bar-container.interactive:hover .progress-track,
 .progress-bar-container.interactive:active .progress-track {
-  height: 7px;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.16);
 }
 
 .progress-fill.green-glow {
   height: 100%;
-  background: linear-gradient(90deg, #4ade80, #22c55e);
+  background: linear-gradient(90deg, #10b981, #22c55e);
   border-radius: 3px;
   transition: width 0.95s linear;
-  box-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.55);
   will-change: width;
 }
 
@@ -548,11 +657,12 @@
 .progress-time {
   display: flex;
   justify-content: space-between;
-  font-size: 11.5px;
+  font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 11px;
   font-weight: 500;
-  color: #94a3b8;
+  color: #64748b;
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.02em;
 }
 
 /* Bottom Controls Row */
@@ -775,6 +885,7 @@
 
 .secondary-btn.active-green {
   color: #4ade80;
+  filter: drop-shadow(0 0 6px rgba(74, 222, 128, 0.5));
 }
 
 .play-pause-apple {
@@ -790,18 +901,19 @@
   background: #ffffff;
   color: #000000;
   padding: 0;
-  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 18px rgba(255, 255, 255, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.95);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
-              background-color 0.2s ease,
-              box-shadow 0.2s ease;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.2s ease,
+              background-color 0.2s ease;
 }
 
 .play-pause-apple:hover:not(:disabled) {
   background: #f8fafc;
-  transform: scale(1.06);
+  transform: scale(1.08);
+  box-shadow: 0 6px 22px rgba(255, 255, 255, 0.45);
 }
 
 .play-pause-apple:active:not(:disabled) {
@@ -811,30 +923,35 @@
 .expanded-center-controls {
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 6px;
   flex-shrink: 0;
 }
 
 .expanded-right-controls {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   flex-shrink: 0;
 }
 
-/* Volume Group (Far Right) */
+/* Volume Group Capsule (Far Right) */
 .volume-group {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   color: #94a3b8;
   flex-shrink: 0;
+  padding: 3px 8px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
 }
 
 .volume-speaker-btn {
   background: none;
   border: none;
-  padding: 4px;
+  padding: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -856,17 +973,26 @@
 
 .volume-icon.muted {
   color: #f87171;
+  filter: drop-shadow(0 0 6px rgba(248, 113, 113, 0.5));
 }
 
 .mini-volume-track {
-  width: 56px;
-  height: 6px;
+  width: 54px;
+  height: 5px;
   border-radius: 3px;
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.14);
   overflow: hidden;
   cursor: pointer;
   touch-action: none;
   transition: height 0.12s ease, background 0.12s ease;
+  position: relative;
+}
+
+.mini-volume-track:hover,
+.mini-volume-track.active-dragging {
+  height: 7px;
+  background: rgba(255, 255, 255, 0.22);
+}
   position: relative;
 }
 
@@ -890,7 +1016,11 @@
 
 /* Idle States */
 .compact-cover.idle { background: #1e293b; color: #64748b; }
-.expanded-cover.idle { background: #1e293b; color: #64748b; box-shadow: none; }
+.expanded-cover.idle {
+  background: radial-gradient(circle at 50% 50%, #1e2838 0%, #0c121d 65%, #05080e 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.55), inset 0 0 14px rgba(34, 211, 238, 0.08);
+}
 .compact-title.idle { color: #94a3b8; font-weight: 400; }
 
 .idle-dot {
@@ -900,52 +1030,52 @@
   background-color: #475569;
 }
 
-/* Switch Module Pill (Inside Player Header) */
-.switch-module-pill-btn {
-  background: rgba(6, 182, 212, 0.14);
-  border: 1px solid rgba(6, 182, 212, 0.32);
-  outline: none;
+/* Unified Floating Glass Tool Dock (Header Right) */
+.island-header-dock {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 4px 10px;
-  border-radius: 14px;
-  color: #22d3ee;
-  font-size: 11px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.16s ease;
-  user-select: none;
-  margin-right: 6px;
+  gap: 3px;
+  padding: 3px 5px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.07);
+  flex-shrink: 0;
 }
 
-.switch-module-pill-btn:hover {
-  background: rgba(6, 182, 212, 0.28);
-  border-color: rgba(6, 182, 212, 0.5);
-  transform: scale(1.04);
-}
-
-.switch-module-icon-btn {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  color: #94a3b8;
-  width: 26px;
-  height: 26px;
+.dock-icon-btn {
+  width: 27px;
+  height: 27px;
   border-radius: 50%;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #94a3b8;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   outline: none;
-  transition: all 0.16s ease;
-  user-select: none;
-  margin-right: 6px;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 0;
 }
 
-.switch-module-icon-btn:hover {
-  background: rgba(255, 255, 255, 0.16);
+.dock-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
   color: #ffffff;
   transform: scale(1.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.dock-icon-btn:active {
+  transform: scale(0.92);
+}
+
+.dock-icon-btn.overboost-btn:hover {
+  color: #22d3ee;
+  background: rgba(34, 211, 238, 0.15);
+  border-color: rgba(34, 211, 238, 0.35);
+  filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.5));
 }
 
 /* =========================================================
@@ -2334,7 +2464,7 @@
 }
 
 /* Overboost Nav Button Accent */
-.switch-module-icon-btn.overboost-btn:hover {
+.dock-icon-btn.overboost-btn:hover {
   background: rgba(34, 211, 238, 0.18);
   border-color: rgba(34, 211, 238, 0.35);
   color: #22d3ee;

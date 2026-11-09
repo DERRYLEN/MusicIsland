@@ -83,10 +83,10 @@ export const MusicExpanded: React.FC<MusicExpandedProps> = ({
   const isPlaying = hasMedia && mediaState.is_playing;
   const isLocal = musicSource === 'local';
 
-  const defaultTitle = isLocal ? 'Pilih File Musik Lokal' : 'Spotify Tidak Aktif';
+  const defaultTitle = isLocal ? 'Musik Lokal' : 'Spotify Standby';
   const defaultArtist = isLocal
-    ? 'Klik "Pilih" di bawah (.mp3, .wav, .ogg)'
-    : 'Klik Spotify di bawah untuk memutar musik';
+    ? 'Buka Berkas untuk memutar audio'
+    : 'Buka Spotify untuk memutar musik';
 
   const title = hasMedia ? mediaState.title : defaultTitle;
   const artist = hasMedia ? mediaState.artist : defaultArtist;
@@ -212,7 +212,7 @@ export const MusicExpanded: React.FC<MusicExpandedProps> = ({
       role="region"
       title="Klik di mana saja untuk mengecilkan notch (atau tekan Esc)"
     >
-      {/* Top row: Track Info & Live Equalizer Capsule */}
+      {/* Top row: Track Info & Unified Glass Header Dock */}
       <div className="expanded-top">
         <div className="expanded-meta">
           <div
@@ -227,9 +227,12 @@ export const MusicExpanded: React.FC<MusicExpandedProps> = ({
                 loading="eager"
               />
             ) : (
-              <svg viewBox="0 0 24 24" className="expanded-fallback-icon">
-                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
-              </svg>
+              <div className="vinyl-cover-disc">
+                <div className="vinyl-ring-groove" />
+                <svg viewBox="0 0 24 24" className="expanded-fallback-icon">
+                  <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+                </svg>
+              </div>
             )}
           </div>
           <div className="track-text">
@@ -239,74 +242,12 @@ export const MusicExpanded: React.FC<MusicExpandedProps> = ({
         </div>
 
         <div className="expanded-header-right">
-          <button
-            type="button"
-            className="switch-module-pill-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              onInteractionActivity?.();
-              onSwitchToExplorer?.();
-            }}
-            title="Buka File Explorer MusicIsland"
-          >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
-            </svg>
-            <span>Berkas</span>
-          </button>
-
-          <button
-            type="button"
-            className="switch-module-icon-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              onInteractionActivity?.();
-              onSwitchToTerminal?.();
-            }}
-            title="Buka Terminal CLI MusicIsland"
-          >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="4 17 10 11 4 5" />
-              <line x1="12" y1="19" x2="20" y2="19" />
-            </svg>
-          </button>
-
-          <button
-            type="button"
-            className="switch-module-icon-btn overboost-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              onInteractionActivity?.();
-              onSwitchToOverboost?.();
-            }}
-            title="Buka Turbo Overboost (System Performance Monitor)"
-          >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.9 17.55 11 21 11 21z" />
-            </svg>
-          </button>
-
-          <button
-            type="button"
-            className="switch-module-icon-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              onInteractionActivity?.();
-              onSwitchToSettings?.();
-            }}
-            title="Buka Pengaturan MusicIsland"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="12" r="3" />
-              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-            </svg>
-          </button>
-
-          {/* Animated Waveform in Capsule */}
+          {/* Animated Waveform Pill saat musik sedang aktif */}
           {hasMedia && (
             <div
               className={`expanded-wave-pill ${isLocal ? 'local-wave' : ''} ${!isPlaying ? 'paused' : ''}`}
               aria-hidden="true"
+              title={isPlaying ? 'Musik sedang berputar' : 'Musik dijeda'}
             >
               <span className="wave-bar" />
               <span className="wave-bar" />
@@ -314,6 +255,75 @@ export const MusicExpanded: React.FC<MusicExpandedProps> = ({
               <span className="wave-bar" />
             </div>
           )}
+
+          {/* Unified Glass Island Dock: File Explorer, Turbo Overboost, Terminal CLI, Settings */}
+          <div className="island-header-dock" role="toolbar" aria-label="Navigasi Fitur MusicIsland">
+            <button
+              type="button"
+              className="dock-icon-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                onInteractionActivity?.();
+                onSwitchToExplorer?.();
+              }}
+              title="File Explorer (Jelajahi Berkas & Audio)"
+              aria-label="Buka File Explorer"
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              className="dock-icon-btn overboost-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                onInteractionActivity?.();
+                onSwitchToOverboost?.();
+              }}
+              title="Turbo Overboost (Monitor CPU & RAM)"
+              aria-label="Buka Turbo Overboost"
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.9 17.55 11 21 11 21z" />
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              className="dock-icon-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                onInteractionActivity?.();
+                onSwitchToTerminal?.();
+              }}
+              title="Terminal CLI (Windows CMD)"
+              aria-label="Buka Terminal CLI"
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="4 17 10 11 4 5" />
+                <line x1="12" y1="19" x2="20" y2="19" />
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              className="dock-icon-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                onInteractionActivity?.();
+                onSwitchToSettings?.();
+              }}
+              title="Pengaturan MusicIsland"
+              aria-label="Buka Pengaturan"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="3" />
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
 
